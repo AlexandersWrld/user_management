@@ -73,6 +73,13 @@ async def test_update_user_invalid_data(db_session, user):
     updated_user = await UserService.update(db_session, user.id, {"email": "invalidemail"})
     assert updated_user is None
 
+# Test updating a user when the user does not exist - akb27, final project new test
+async def test_update_user_does_not_exist(db_session, user):
+    new_email = "updated_email@example.com"
+    user.id = None
+    updated_user = await UserService.update(db_session, user.id, {"email": new_email})
+    assert updated_user is None
+
 # Test deleting a user who exists
 async def test_delete_user_exists(db_session, user):
     deletion_success = await UserService.delete(db_session, user.id)

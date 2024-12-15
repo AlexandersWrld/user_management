@@ -245,3 +245,10 @@ async def verify_email(user_id: UUID, token: str, db: AsyncSession = Depends(get
     if await UserService.verify_email_with_token(db, user_id, token):
         return {"message": "Email verified successfully"}
     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid or expired verification token")
+
+@router.put("/profile edit/", response_model=UserResponse, tags=["Login and Registration"])
+async def register(user_data: UserCreate, session: AsyncSession = Depends(get_db), email_service: EmailService = Depends(get_email_service)):
+    user = await UserService.register_user(session, user_data.model_dump(), email_service)
+    if user:
+        return user
+    raise HTTPException(status_code=400, detail="Email already exists")

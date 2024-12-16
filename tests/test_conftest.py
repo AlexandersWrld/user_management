@@ -8,6 +8,7 @@ from sqlalchemy.future import select
 from app.models.user_model import User, UserRole
 from app.utils.security import verify_password
 from app.utils.nickname_gen import generate_nickname
+from collections import Counter
 
 @pytest.mark.asyncio
 async def test_user_creation(db_session, verified_user):
@@ -87,3 +88,19 @@ def test_nickname_adjective():
     adjective = nickname.split('_')[0]
     assert adjective in adjectives, f"Adjective '{adjective}' is not in the list of valid adjectives"
 
+# testing to see if nicknames are randomly and evenly distrubuted - akb27, final project new test
+@pytest.mark.asyncio
+def test_nickname_randomness():
+    adjectives = ["clever", "jolly", "brave", "sly", "gentle"]
+    animals = ["panda", "fox", "raccoon", "koala", "lion"]
+    adjective_counts = Counter()
+    animal_counts = Counter()
+    for _ in range(100000):
+        nickname = generate_nickname()
+        adjective, animal, _ = nickname.split('_')
+        adjective_counts[adjective] += 1
+        animal_counts[animal] += 1
+    for adjective in adjectives:
+        assert 18000 <= adjective_counts[adjective] <= 22000, f"Adjective '{adjective}' is not uniformly distributed"    
+    for animal in animals:
+        assert 18000 <= animal_counts[animal] <= 22000, f"Animal '{animal}' is not uniformly distributed"

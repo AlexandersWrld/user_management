@@ -7,6 +7,7 @@ from sqlalchemy.future import select
 
 from app.models.user_model import User, UserRole
 from app.utils.security import verify_password
+from app.utils.nickname_gen import generate_nickname
 
 @pytest.mark.asyncio
 async def test_user_creation(db_session, verified_user):
@@ -62,3 +63,9 @@ async def test_update_professional_status(db_session, verified_user):
     updated_user = result.scalars().first()
     assert updated_user.is_professional
     assert updated_user.professional_status_updated_at is not None
+
+@pytest.mark.asyncio
+def test_nickname_number_range():
+    nickname = generate_nickname()
+    number = int(nickname.split('_')[2])
+    assert 0 <= number <= 999, f"Number '{number}' is not in the range 0-999"

@@ -90,6 +90,14 @@ async def test_update_user_with_first_name_change(db_session, user):
     assert updated_user is not None
     assert updated_user.first_name != old_name
 
+# Test updating a user with a new biography - akb27, final project new test
+async def test_update_change_bio(db_session, user):
+    old_bio = user.bio
+    new_bio = "aspiring tech lead at NJIT"
+    updated_user = await UserService.update(db_session, user.id, {"bio": new_bio})
+    assert updated_user is not None
+    assert updated_user.bio != old_bio
+
 
 # Test deleting a user who exists
 async def test_delete_user_exists(db_session, user):

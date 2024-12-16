@@ -261,6 +261,7 @@ async def manage_profile(user_id: UUID, user_update: UserUpdate, request: Reques
         nickname=updated_user.nickname,
         email=updated_user.email,
         role=updated_user.role,
+        professional_status = updated_user.is_professional,
         last_login_at=updated_user.last_login_at,
         profile_picture_url=updated_user.profile_picture_url,
         github_profile_url=updated_user.github_profile_url,

@@ -173,7 +173,7 @@ async def test_reset_password(db_session, user):
     reset_success = await UserService.reset_password(db_session, user.id, new_password)
     assert reset_success is True
 
-# Test an attempt at reseting the password on a locked account - final project new test
+# Test an attempt at reseting the password on a locked account - akb27 final project new test
 async def test_reset_password_locked_account(db_session, user):
     password = "freeworlboss"
     max_login_attempts = get_settings().max_login_attempts

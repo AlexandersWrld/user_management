@@ -64,12 +64,14 @@ async def test_update_professional_status(db_session, verified_user):
     assert updated_user.is_professional
     assert updated_user.professional_status_updated_at is not None
 
+# testing that the chosen nickname numbers are within the correct range - akb27, final project new test
 @pytest.mark.asyncio
 def test_nickname_number_range():
     nickname = generate_nickname()
     number = int(nickname.split('_')[2])
     assert 0 <= number <= 999, f"Number '{number}' is not in the range 0-999"
 
+# testing that the chosen nickname animal is among the valid options - akb27, final project new test
 @pytest.mark.asyncio
 def test_nickname_animal():
     animals = ["panda", "fox", "raccoon", "koala", "lion"]
@@ -77,9 +79,11 @@ def test_nickname_animal():
     animal = nickname.split('_')[1]
     assert animal in animals, f"Animal '{animal}' is not in the list of valid animals"
 
+# testing that the chosen nickname adjective is among the valid options - akb27, final project new test
 @pytest.mark.asyncio
 def test_nickname_adjective():
     adjectives = ["clever", "jolly", "brave", "sly", "gentle"]
     nickname = generate_nickname()
     adjective = nickname.split('_')[0]
     assert adjective in adjectives, f"Adjective '{adjective}' is not in the list of valid adjectives"
+

@@ -5,6 +5,7 @@ from app.dependencies import get_settings
 from app.models.user_model import User, UserRole
 from app.services.user_service import UserService
 from app.utils.nickname_gen import generate_nickname
+from app.utils.security import generate_verification_token, hash_password, verify_password
 
 pytestmark = pytest.mark.asyncio
 
@@ -29,6 +30,7 @@ async def test_create_user_with_invalid_data(db_session, email_service):
     }
     user = await UserService.create(db_session, user_data, email_service)
     assert user is None
+
 
 # Test fetching a user by ID when the user exists
 async def test_get_by_id_user_exists(db_session, user):
@@ -72,6 +74,29 @@ async def test_update_user_valid_data(db_session, user):
 async def test_update_user_invalid_data(db_session, user):
     updated_user = await UserService.update(db_session, user.id, {"email": "invalidemail"})
     assert updated_user is None
+
+# Test updating a user when the user does not exist - akb27, final project new test
+async def test_update_user_does_not_exist(db_session, user):
+    new_email = "updated_email@example.com"
+    user.id = None
+    updated_user = await UserService.update(db_session, user.id, {"email": new_email})
+    assert updated_user is None
+
+# Test updating a user with a new first name - akb27, final project new test
+async def test_update_user_with_first_name_change(db_session, user):
+    old_name = user.first_name
+    new_name = "jimmy"
+    updated_user = await UserService.update(db_session, user.id, {"first_name": new_name})
+    assert updated_user is not None
+    assert updated_user.first_name != old_name
+
+# Test updating a user with a new biography - akb27, final project new test
+async def test_update_change_bio(db_session, user):
+    old_bio = user.bio
+    new_bio = "aspiring tech lead at NJIT"
+    updated_user = await UserService.update(db_session, user.id, {"bio": new_bio})
+    assert updated_user is not None
+    assert updated_user.bio != old_bio
 
 # Test deleting a user who exists
 async def test_delete_user_exists(db_session, user):
@@ -147,6 +172,16 @@ async def test_reset_password(db_session, user):
     reset_success = await UserService.reset_password(db_session, user.id, new_password)
     assert reset_success is True
 
+# Test an attempt at reseting the password on a locked account - akb27 final project new test
+async def test_reset_password_locked_account(db_session, user):
+    password = "freeworlboss"
+    max_login_attempts = get_settings().max_login_attempts
+    for _ in range(max_login_attempts):
+        await UserService.login_user(db_session, user.email, "wrongpassword")
+    is_locked = await UserService.is_account_locked(db_session, user.email)
+    reset_success = await UserService.reset_password(db_session, user.id, password)
+    assert reset_success != is_locked
+
 # Test verifying a user's email
 async def test_verify_email_with_token(db_session, user):
     token = "valid_token_example"  # This should be set in your user setup if it depends on a real token
@@ -161,3 +196,5 @@ async def test_unlock_user_account(db_session, locked_user):
     assert unlocked, "The account should be unlocked"
     refreshed_user = await UserService.get_by_id(db_session, locked_user.id)
     assert not refreshed_user.is_locked, "The user should no longer be locked"
+
+

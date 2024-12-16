@@ -69,3 +69,10 @@ def test_nickname_number_range():
     nickname = generate_nickname()
     number = int(nickname.split('_')[2])
     assert 0 <= number <= 999, f"Number '{number}' is not in the range 0-999"
+
+@pytest.mark.asyncio
+def test_nickname_animal():
+    animals = ["panda", "fox", "raccoon", "koala", "lion"]
+    nickname = generate_nickname()
+    animal = nickname.split('_')[1]
+    assert animal in animals, f"Animal '{animal}' is not in the list of valid animals"

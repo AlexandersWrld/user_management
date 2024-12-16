@@ -173,6 +173,16 @@ async def test_reset_password(db_session, user):
     reset_success = await UserService.reset_password(db_session, user.id, new_password)
     assert reset_success is True
 
+# Test an attempt at reseting the password on a locked account - final project new test
+async def test_reset_password_locked_account(db_session, user):
+    password = "freeworlboss"
+    max_login_attempts = get_settings().max_login_attempts
+    for _ in range(max_login_attempts):
+        await UserService.login_user(db_session, user.email, "wrongpassword")
+    is_locked = await UserService.is_account_locked(db_session, user.email)
+    reset_success = await UserService.reset_password(db_session, user.id, password)
+    assert reset_success != is_locked
+
 # Test verifying a user's email
 async def test_verify_email_with_token(db_session, user):
     token = "valid_token_example"  # This should be set in your user setup if it depends on a real token

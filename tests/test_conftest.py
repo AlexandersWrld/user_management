@@ -106,8 +106,15 @@ def test_nickname_randomness():
     for animal in animals:
         assert 18000 <= animal_counts[animal] <= 22000, f"Animal '{animal}' is not uniformly distributed"
 
+# testing to see if nicknames are in the prescribed format - akb27, final project new test
 @pytest.mark.asyncio
 def test_nickname_format():
     nickname = generate_nickname()
     pattern = r"^[a-z]+_[a-z]+_\d{1,3}$"  # Lowercase letters + underscore + number (0-999)
     assert re.match(pattern, nickname), f"Nickname '{nickname}' does not match the format 'adjective_animal_number'"
+
+# testing to see if nicknames are valid for use in profile URLs - akb27, final project new test
+@pytest.mark.asyncio
+def test_nickname_is_url_safe():
+    nickname = generate_nickname()
+    assert re.match(r'^[a-z0-9_]+$', nickname), f"Nickname '{nickname}' contains non-URL-safe characters"

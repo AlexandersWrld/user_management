@@ -1,7 +1,6 @@
 import pytest
 from app.services.email_service import EmailService
 from app.utils.template_manager import TemplateManager
-
     
 @pytest.mark.asyncio
 async def test_send_markdown_email(email_service):
@@ -12,3 +11,4 @@ async def test_send_markdown_email(email_service):
     }
     await email_service.send_user_email(user_data, 'email_verification')
     # Manual verification in Mailtrap
+

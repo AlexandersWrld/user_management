@@ -98,7 +98,6 @@ async def test_update_change_bio(db_session, user):
     assert updated_user is not None
     assert updated_user.bio != old_bio
 
-
 # Test deleting a user who exists
 async def test_delete_user_exists(db_session, user):
     deletion_success = await UserService.delete(db_session, user.id)

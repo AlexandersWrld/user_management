@@ -9,6 +9,7 @@ from app.models.user_model import User, UserRole
 from app.utils.security import verify_password
 from app.utils.nickname_gen import generate_nickname
 from collections import Counter
+import re
 
 @pytest.mark.asyncio
 async def test_user_creation(db_session, verified_user):
@@ -104,3 +105,9 @@ def test_nickname_randomness():
         assert 18000 <= adjective_counts[adjective] <= 22000, f"Adjective '{adjective}' is not uniformly distributed"    
     for animal in animals:
         assert 18000 <= animal_counts[animal] <= 22000, f"Animal '{animal}' is not uniformly distributed"
+
+@pytest.mark.asyncio
+def test_nickname_format():
+    nickname = generate_nickname()
+    pattern = r"^[a-z]+_[a-z]+_\d{1,3}$"  # Lowercase letters + underscore + number (0-999)
+    assert re.match(pattern, nickname), f"Nickname '{nickname}' does not match the format 'adjective_animal_number'"

@@ -76,3 +76,10 @@ def test_nickname_animal():
     nickname = generate_nickname()
     animal = nickname.split('_')[1]
     assert animal in animals, f"Animal '{animal}' is not in the list of valid animals"
+
+@pytest.mark.asyncio
+def test_nickname_adjective():
+    adjectives = ["clever", "jolly", "brave", "sly", "gentle"]
+    nickname = generate_nickname()
+    adjective = nickname.split('_')[0]
+    assert adjective in adjectives, f"Adjective '{adjective}' is not in the list of valid adjectives"

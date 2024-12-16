@@ -246,8 +246,8 @@ async def verify_email(user_id: UUID, token: str, db: AsyncSession = Depends(get
         return {"message": "Email verified successfully"}
     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid or expired verification token")
 
-@router.put("/profile management/", response_model=UserResponse, tags=["Login and Registration"])
-async def edit_profile(user_id: UUID, user_update: UserUpdate, request: Request, db: AsyncSession = Depends(get_db), token: str = Depends(oauth2_scheme)):
+@router.put("/profile management/", response_model=UserResponse, tags=["Profile Management"])
+async def manage_profile(user_id: UUID, user_update: UserUpdate, request: Request, db: AsyncSession = Depends(get_db), token: str = Depends(oauth2_scheme)):
     user_data = user_update.model_dump(exclude_unset=True)
     updated_user = await UserService.update(db, user_id, user_data)
     if not updated_user:

@@ -17,3 +17,14 @@ For my final I chose to do the User Profile Management Feature (yes, I know, the
 The most difficult part of this project was easily the testing portion of it, and not for a lack of trying. I found that much of the testing that was already implemented into the project was very robust. Time and time again, I would get an idea for a test that I could run, only to see that it had already been thought of and implemented already. Another challenge that I ran into with the testing, is that my initials tests weren’t very good; I started off writing them pretty poorly, but eventually I got a better understanding of how to construct them as I went forward. In the end , I was able to come up with 10 new test cases, that checked especially for a few fringe scenarios (such as ensuring that a locked user was not able to change their password and ensuring that the generated nicknames were URL-safe in the event that someone should share their profile). This portion of the project really showed me how extensive automated testing really needs to be for such robust applications; I can only imagine what goes into much larger, globally used applications. 
 
 Each semester, I mentally assign a level of importance to each of my classes, and I would definitely say that this class has been the star of my semester. It has singlehandedly helped reshape the narrative I had in my head about programming and coding and has inspired me to potentially pursue back-end development or devops engineering as a career path.
+
+### Feature Images ###
+
+**New User Endpoint**
+![alt text](chrome_KEx1hr2amT.png)
+
+**Input Fields**
+![alt text](chrome_fEKD6sDmCM.png)
+
+**Admin Upgrade User Status**
+![alt text](chrome_dQi6U8dkIi.png)

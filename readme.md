@@ -3,8 +3,11 @@
 ### IS218-001
 
 **Repo Link: https://github.com/AlexandersWrld/user_management**
+
 **Deployment link: https://github.com/AlexandersWrld/user_management/deployments**
+
 **Succesful push to docker workflow step: https://github.com/AlexandersWrld/user_management/actions/runs/12360762258/job/34496489242#logs**
+
 **DockerHub Screenshot:**
 ![alt text](Docker_Desktop_yGcyjNiTGC.png)
 
